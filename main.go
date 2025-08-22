@@ -7,13 +7,21 @@ import (
 )
 
 func main() {
+	initSupportedFunctions()
 	userInput := bufio.NewScanner(os.Stdin)
 
 	for {
 		fmt.Print("Pokedex > ")
 		if userInput.Scan() && len(userInput.Text()) > 0 {
-			userString := cleanInput(userInput.Text())[0]
-			fmt.Printf("Your command was: %s\n", userString)
+			cleanedInput := cleanInput(userInput.Text())
+			if len(cleanedInput) < 1 {
+				continue
+			}
+
+			userCommand := cleanedInput[0]
+			if cmd, ok := supportedFunctions[userCommand]; ok {
+				cmd.callback()
+			}
 		}
 	}
 }
