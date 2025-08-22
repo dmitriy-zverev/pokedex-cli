@@ -13,7 +13,7 @@ func TestCleanInput(t *testing.T) {
 		},
 		{
 			input:    "i need pokemon.    NOW!! ",
-			expected: []string{"i", "need", "pokemon.", "NOW!!"},
+			expected: []string{"i", "need", "pokemon.", "now!!"},
 		},
 		{
 			input:    "",
