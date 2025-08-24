@@ -159,6 +159,7 @@ func commandCatch(config *Config, cache *pokecache.Cache) error {
 		config.Pokedex[pokemonStruct.Name] = pokemonStruct
 
 		fmt.Printf("%s was caught!\n", pokemon)
+		fmt.Printf("You may now inspect it with the inspect %s!\n", pokemon)
 		return nil
 	}
 
@@ -194,6 +195,21 @@ func commandInspect(config *Config, cache *pokecache.Cache) error {
 	}
 
 	fmt.Println("You have not caught this pokemon yet")
+
+	return nil
+}
+
+func commandPokedex(config *Config, cache *pokecache.Cache) error {
+	fmt.Println("Your Pokedex:")
+
+	if len(config.Pokedex) < 1 {
+		fmt.Println("You have not caught any pokemons")
+		return nil
+	}
+
+	for pokemon := range config.Pokedex {
+		fmt.Println("\t-", pokemon)
+	}
 
 	return nil
 }

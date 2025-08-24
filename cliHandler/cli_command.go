@@ -49,5 +49,10 @@ func InitSupportedFunctions() {
 			Description: "Inspects a pokemon from your pokedex",
 			Callback:    commandInspect,
 		},
+		"pokedex": {
+			Name:        "pokedex",
+			Description: "Lists all of the caught pokemons",
+			Callback:    commandPokedex,
+		},
 	}
 }
