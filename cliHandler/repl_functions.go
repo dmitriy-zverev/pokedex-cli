@@ -7,10 +7,11 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/dmitriy-zverev/pokedex-cli/pokecache"
 	"github.com/dmitriy-zverev/pokedex-cli/pokedexApiHandler"
 )
 
-func commandExit(config *Config) error {
+func commandExit(config *Config, cache *pokecache.Cache) error {
 	updateConfig(REPL_EXIT, config)
 
 	fmt.Print("Closing the Pokedex... Goodbye!\n")
@@ -18,7 +19,7 @@ func commandExit(config *Config) error {
 	return nil
 }
 
-func commandHelp(config *Config) error {
+func commandHelp(config *Config, cache *pokecache.Cache) error {
 	updateConfig(REPL_HELP, config)
 
 	fmt.Printf("Welcome to the Pokedex!\nUsage:\n\n")
@@ -30,15 +31,20 @@ func commandHelp(config *Config) error {
 	return nil
 }
 
-func commandMap(config *Config) error {
+func commandMap(config *Config, cache *pokecache.Cache) error {
 	updateConfig(REPL_MAP, config)
 
 	splittedNextUrl := strings.Split(config.Next, "/")
 	nextId, _ := strconv.Atoi(splittedNextUrl[len(splittedNextUrl)-1])
 
 	for i := range POKEDEX_LOCATION_AREA_LIMIT {
-		fullUrl := POKEDEX_LOCATION_AREA_URL + fmt.Sprint(nextId+i)
-		locationArea, err := pokedexApiHandler.GetLocationArea(fullUrl)
+		currentId := nextId + i
+		if currentId > POKEDEX_LOCATION_AREA_MAX_LOCATION_ID {
+			return errors.New("you've scrolled through all of the available locatons")
+		}
+
+		fullUrl := POKEDEX_LOCATION_AREA_URL + fmt.Sprint(currentId)
+		locationArea, err := pokedexApiHandler.GetLocationArea(fullUrl, cache)
 		if err != nil {
 			return err
 		}
@@ -46,13 +52,13 @@ func commandMap(config *Config) error {
 		fmt.Println(locationArea["name"])
 	}
 
-	config.Previous = POKEDEX_LOCATION_AREA_URL + fmt.Sprint(nextId+19)
-	config.Next = POKEDEX_LOCATION_AREA_URL + fmt.Sprint(nextId+20)
+	config.Previous = POKEDEX_LOCATION_AREA_URL + fmt.Sprint(nextId+POKEDEX_LOCATION_AREA_LIMIT-1)
+	config.Next = POKEDEX_LOCATION_AREA_URL + fmt.Sprint(nextId+POKEDEX_LOCATION_AREA_LIMIT)
 
 	return nil
 }
 
-func commandMapb(config *Config) error {
+func commandMapb(config *Config, cache *pokecache.Cache) error {
 	updateConfig(REPL_MAP, config)
 
 	splittedNextUrl := strings.Split(config.Next, "/")
@@ -63,8 +69,13 @@ func commandMapb(config *Config) error {
 	}
 
 	for i := range POKEDEX_LOCATION_AREA_LIMIT {
-		fullUrl := POKEDEX_LOCATION_AREA_URL + fmt.Sprint(nextId-POKEDEX_LOCATION_AREA_LIMIT*2+i)
-		locationArea, err := pokedexApiHandler.GetLocationArea(fullUrl)
+		currentId := nextId + i
+		if currentId > POKEDEX_LOCATION_AREA_MAX_LOCATION_ID {
+			return errors.New("you've scrolled through all of the available locatons")
+		}
+
+		fullUrl := POKEDEX_LOCATION_AREA_URL + fmt.Sprint(currentId-POKEDEX_LOCATION_AREA_LIMIT*2)
+		locationArea, err := pokedexApiHandler.GetLocationArea(fullUrl, cache)
 		if err != nil {
 			return err
 		}

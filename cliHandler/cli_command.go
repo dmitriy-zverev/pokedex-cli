@@ -1,9 +1,13 @@
 package cliHandler
 
+import (
+	"github.com/dmitriy-zverev/pokedex-cli/pokecache"
+)
+
 type CliCommand struct {
 	Name        string
 	Description string
-	Callback    func(config *Config) error
+	Callback    func(config *Config, cache *pokecache.Cache) error
 }
 
 var SupportedFunctions map[string]CliCommand

@@ -4,8 +4,10 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/dmitriy-zverev/pokedex-cli/cliHandler"
+	"github.com/dmitriy-zverev/pokedex-cli/pokecache"
 )
 
 func main() {
@@ -13,6 +15,7 @@ func main() {
 
 	userInput := bufio.NewScanner(os.Stdin)
 	userConfig := cliHandler.Config{}
+	userCache := pokecache.NewCache(60 * time.Second)
 
 	for {
 		fmt.Print("Pokedex > ")
@@ -24,7 +27,7 @@ func main() {
 
 			userCommand := cleanedInput[0]
 			if cmd, ok := cliHandler.SupportedFunctions[userCommand]; ok {
-				err := cmd.Callback(&userConfig)
+				err := cmd.Callback(&userConfig, &userCache)
 				if err != nil {
 					fmt.Printf("Error running the command: %v\n", err)
 				}
