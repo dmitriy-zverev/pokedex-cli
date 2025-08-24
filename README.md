@@ -141,3 +141,6 @@ Pokedex > pokedex
 Your Pokedex:
         - pikachu
 ```
+
+## Certificate for completion
+<img width="915" height="558" alt="bootdev_certificate" src="https://github.com/user-attachments/assets/4d7bd23d-5c06-46fd-9a65-c2a8600c549a" />
