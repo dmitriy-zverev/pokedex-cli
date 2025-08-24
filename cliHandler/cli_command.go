@@ -35,9 +35,19 @@ func InitSupportedFunctions() {
 			Callback:    commandMapb,
 		},
 		"explore": {
-			Name:        "explort",
+			Name:        "explore",
 			Description: "Expores the location area and returns pokemons at this area",
 			Callback:    commandExplore,
+		},
+		"catch": {
+			Name:        "catch",
+			Description: "Catches a pokemon—or not",
+			Callback:    commandCatch,
+		},
+		"inspect": {
+			Name:        "inspect",
+			Description: "Inspects a pokemon from your pokedex",
+			Callback:    commandInspect,
 		},
 	}
 }

@@ -16,6 +16,7 @@ func main() {
 	userInput := bufio.NewScanner(os.Stdin)
 	userConfig := cliHandler.Config{}
 	userCache := pokecache.NewCache(60 * time.Second)
+	userConfig.Pokedex = make(map[string]cliHandler.Pokemon, 0)
 
 	for {
 		fmt.Print("Pokedex > ")

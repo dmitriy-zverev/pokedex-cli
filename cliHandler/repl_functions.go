@@ -3,6 +3,7 @@ package cliHandler
 import (
 	"errors"
 	"fmt"
+	"math/rand/v2"
 	"os"
 	"strconv"
 	"strings"
@@ -44,7 +45,7 @@ func commandMap(config *Config, cache *pokecache.Cache) error {
 		}
 
 		fullUrl := POKEDEX_LOCATION_AREA_URL + fmt.Sprint(currentId)
-		locationArea, err := pokedexApiHandler.GetLocationArea(fullUrl, cache)
+		locationArea, err := pokedexApiHandler.GetPokemonData(fullUrl, cache)
 		if err != nil {
 			return err
 		}
@@ -75,7 +76,7 @@ func commandMapb(config *Config, cache *pokecache.Cache) error {
 		}
 
 		fullUrl := POKEDEX_LOCATION_AREA_URL + fmt.Sprint(currentId-POKEDEX_LOCATION_AREA_LIMIT*2)
-		locationArea, err := pokedexApiHandler.GetLocationArea(fullUrl, cache)
+		locationArea, err := pokedexApiHandler.GetPokemonData(fullUrl, cache)
 		if err != nil {
 			return err
 		}
@@ -99,7 +100,7 @@ func commandExplore(config *Config, cache *pokecache.Cache) error {
 
 	fmt.Printf("Exploring %s...\n", locationArea)
 
-	location, err := pokedexApiHandler.GetLocationArea(locationAreaUrl, cache)
+	location, err := pokedexApiHandler.GetPokemonData(locationAreaUrl, cache)
 	if err != nil {
 		fmt.Println("Location not found")
 		return err
@@ -114,6 +115,85 @@ func commandExplore(config *Config, cache *pokecache.Cache) error {
 			}
 		}
 	}
+
+	return nil
+}
+
+func commandCatch(config *Config, cache *pokecache.Cache) error {
+	if len(config.FullCommand) < 2 {
+		return errors.New("cannot catch nothing")
+	}
+
+	pokemon := config.FullCommand[1]
+	pokemonUrl := POKEDEX_POKEMON_URL + pokemon
+
+	fmt.Printf("Throwing a Pokeball at %s...\n", pokemon)
+
+	pokemonData, err := pokedexApiHandler.GetPokemonData(pokemonUrl, cache)
+	if err != nil {
+		fmt.Println("Pokemon do not exist")
+		return err
+	}
+
+	pokemonBaseExperience := int(pokemonData["base_experience"].(float64))
+
+	if pokemonBaseExperience-rand.IntN(pokemonBaseExperience) < POKEDEX_POKEMON_CATCH_DIFFICULTY {
+		types := make([]string, 0)
+
+		for _, item := range pokemonData["types"].([]any) {
+			types = append(types, item.(map[string]any)["type"].(map[string]any)["name"].(string))
+		}
+
+		pokemonStruct := Pokemon{
+			Name:           pokemonData["name"].(string),
+			Height:         int(pokemonData["height"].(float64)),
+			Weight:         int(pokemonData["weight"].(float64)),
+			HP:             int(pokemonData["stats"].([]any)[0].(map[string]any)["base_stat"].(float64)),
+			Attack:         int(pokemonData["stats"].([]any)[1].(map[string]any)["base_stat"].(float64)),
+			Defense:        int(pokemonData["stats"].([]any)[2].(map[string]any)["base_stat"].(float64)),
+			SpecialAttack:  int(pokemonData["stats"].([]any)[3].(map[string]any)["base_stat"].(float64)),
+			SpecialDefense: int(pokemonData["stats"].([]any)[4].(map[string]any)["base_stat"].(float64)),
+			Speed:          int(pokemonData["stats"].([]any)[5].(map[string]any)["base_stat"].(float64)),
+			Types:          types,
+		}
+		config.Pokedex[pokemonStruct.Name] = pokemonStruct
+
+		fmt.Printf("%s was caught!\n", pokemon)
+		return nil
+	}
+
+	fmt.Printf("%s escaped!\n", pokemon)
+	return nil
+}
+
+func commandInspect(config *Config, cache *pokecache.Cache) error {
+	if len(config.FullCommand) < 2 {
+		return errors.New("cannot inspect nothing")
+	}
+
+	pokemon := config.FullCommand[1]
+
+	if pokemonData, ok := config.Pokedex[pokemon]; ok {
+		fmt.Println("Name:", pokemonData.Name)
+		fmt.Println("Height:", pokemonData.Height)
+		fmt.Println("Weight:", pokemonData.Weight)
+		fmt.Println("Stats:")
+		fmt.Println("\thp:", pokemonData.HP)
+		fmt.Println("\tattack:", pokemonData.Attack)
+		fmt.Println("\tdefense:", pokemonData.Defense)
+		fmt.Println("\tspecial-attack:", pokemonData.SpecialAttack)
+		fmt.Println("\tspecial-defense:", pokemonData.SpecialDefense)
+		fmt.Println("\tspeed:", pokemonData.Speed)
+		fmt.Println("Types:")
+
+		for _, t := range pokemonData.Types {
+			fmt.Println("\t", t)
+		}
+
+		return nil
+	}
+
+	fmt.Println("You have not caught this pokemon yet")
 
 	return nil
 }

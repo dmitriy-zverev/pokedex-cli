@@ -7,15 +7,15 @@ import (
 	"github.com/dmitriy-zverev/pokedex-cli/pokecache"
 )
 
-func GetLocationArea(url string, cache *pokecache.Cache) (map[string]any, error) {
+func GetPokemonData(url string, cache *pokecache.Cache) (map[string]any, error) {
 	if cacheData, ok := cache.Get(url); ok {
-		var location map[string]any
+		var data map[string]any
 
-		if err := json.Unmarshal(cacheData, &location); err != nil {
+		if err := json.Unmarshal(cacheData, &data); err != nil {
 			return map[string]any{}, err
 		}
 
-		return location, nil
+		return data, nil
 	}
 
 	client := &http.Client{}
@@ -31,18 +31,18 @@ func GetLocationArea(url string, cache *pokecache.Cache) (map[string]any, error)
 	}
 	defer res.Body.Close()
 
-	var location map[string]any
+	var data map[string]any
 
 	decoder := json.NewDecoder(res.Body)
-	if err = decoder.Decode(&location); err != nil {
+	if err = decoder.Decode(&data); err != nil {
 		return map[string]any{}, err
 	}
 
-	jsonData, err := json.Marshal(location)
+	jsonData, err := json.Marshal(data)
 	if err != nil {
 		return map[string]any{}, err
 	}
 	cache.Add(url, jsonData)
 
-	return location, nil
+	return data, nil
 }

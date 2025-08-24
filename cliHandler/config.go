@@ -3,6 +3,7 @@ package cliHandler
 import "errors"
 
 type Config struct {
+	Pokedex     map[string]Pokemon
 	Command     int
 	FullCommand []string
 	Next        string
