@@ -1,6 +1,10 @@
 package main
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/dmitriy-zverev/pokedex-cli/cliHandler"
+)
 
 func TestCleanInput(t *testing.T) {
 	cases := []struct {
@@ -26,7 +30,7 @@ func TestCleanInput(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := cleanInput(c.input)
+		actual := cliHandler.CleanInput(c.input)
 
 		if len(actual) != len(c.expected) {
 			t.Errorf("Testing error: lengths do not match")
