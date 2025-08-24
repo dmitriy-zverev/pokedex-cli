@@ -3,9 +3,10 @@ package cliHandler
 import "errors"
 
 type Config struct {
-	Next     string
-	Previous string
-	Command  int
+	Command     int
+	FullCommand []string
+	Next        string
+	Previous    string
 }
 
 func updateConfig(command int, config *Config) error {

@@ -88,3 +88,32 @@ func commandMapb(config *Config, cache *pokecache.Cache) error {
 
 	return nil
 }
+
+func commandExplore(config *Config, cache *pokecache.Cache) error {
+	if len(config.FullCommand) < 2 {
+		return errors.New("cannot explore an empty area")
+	}
+
+	locationArea := config.FullCommand[1]
+	locationAreaUrl := POKEDEX_LOCATION_AREA_URL + locationArea
+
+	fmt.Printf("Exploring %s...\n", locationArea)
+
+	location, err := pokedexApiHandler.GetLocationArea(locationAreaUrl, cache)
+	if err != nil {
+		fmt.Println("Location not found")
+		return err
+	}
+
+	fmt.Println("Found Pokemon:")
+
+	for _, value := range location["pokemon_encounters"].([]any) {
+		for i, data := range value.(map[string]any) {
+			if i == "pokemon" {
+				fmt.Println(" -", data.(map[string]any)["name"])
+			}
+		}
+	}
+
+	return nil
+}

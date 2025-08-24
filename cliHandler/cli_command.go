@@ -34,5 +34,10 @@ func InitSupportedFunctions() {
 			Description: "Displays 20 previous locations",
 			Callback:    commandMapb,
 		},
+		"explore": {
+			Name:        "explort",
+			Description: "Expores the location area and returns pokemons at this area",
+			Callback:    commandExplore,
+		},
 	}
 }

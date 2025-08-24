@@ -20,12 +20,12 @@ func main() {
 	for {
 		fmt.Print("Pokedex > ")
 		if userInput.Scan() && len(userInput.Text()) > 0 {
-			cleanedInput := cliHandler.CleanInput(userInput.Text())
-			if len(cleanedInput) < 1 {
+			userConfig.FullCommand = cliHandler.CleanInput(userInput.Text())
+			if len(userConfig.FullCommand) < 1 {
 				continue
 			}
+			userCommand := userConfig.FullCommand[0]
 
-			userCommand := cleanedInput[0]
 			if cmd, ok := cliHandler.SupportedFunctions[userCommand]; ok {
 				err := cmd.Callback(&userConfig, &userCache)
 				if err != nil {
