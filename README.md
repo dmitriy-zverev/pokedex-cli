@@ -1,3 +1,4 @@
+````markdown
 # PokéDex CLI Explorer
 
 A powerful command-line Pokédex application that brings the world of Pokémon to your terminal. Explore locations, catch Pokémon, and build your personal collection with this interactive CLI tool powered by the PokéAPI.
@@ -36,16 +37,18 @@ Built with Go, this application features intelligent caching for optimal perform
    ```bash
    git clone https://github.com/dmitriy-zverev/pokedex-cli.git
    cd pokedex-cli
-   ```
+````
 
-2. **Build and run:**
+2. __Build and run:__
+
    ```bash
    go build -o pokedex-cli
    ./pokedex-cli
    ```
 
-3. **Start exploring:**
-   ```
+3. __Start exploring:__
+
+   ```javascript
    Pokedex > help
    ```
 
@@ -56,12 +59,15 @@ You'll be greeted with the interactive Pokédex prompt where you can start your 
 ### Core Commands
 
 #### Getting Help
+
 ```bash
 Pokedex > help
 ```
+
 Displays all available commands and their descriptions.
 
 #### Location Exploration
+
 ```bash
 # View next 20 locations
 Pokedex > map
@@ -74,6 +80,7 @@ Pokedex > explore canalave-city-area
 ```
 
 #### Pokémon Management
+
 ```bash
 # Attempt to catch a Pokémon
 Pokedex > catch pikachu
@@ -86,6 +93,7 @@ Pokedex > pokedex
 ```
 
 #### System Commands
+
 ```bash
 # Exit the application
 Pokedex > exit
@@ -133,5 +141,61 @@ Your Pokedex:
         - pikachu
 ```
 
-## Certificate for completion
-<img width="915" height="558" alt="bootdev_certificate" src="https://github.com/user-attachments/assets/4d7bd23d-5c06-46fd-9a65-c2a8600c549a" />
+### Features
+
+- __🗺️ Location Navigation__: Browse through Pokémon world locations with pagination
+- __🔍 Area Exploration__: Discover which Pokémon inhabit specific areas
+- __⚡ Pokémon Catching__: Attempt to catch Pokémon with realistic success rates
+- __📊 Detailed Stats__: View comprehensive Pokémon information including stats and types
+- __💾 Collection Management__: Build and view your personal Pokédex
+- __🚀 Performance Caching__: Intelligent caching system for faster API responses
+- __🎮 Interactive REPL__: Smooth command-line interface with helpful prompts
+
+## Contributing
+
+Contributions are welcome! This project demonstrates several Go programming concepts and is perfect for learning or extending.
+
+### Development Setup
+
+1. __Fork the repository__
+2. __Clone your fork:__
+   ```bash
+   git clone https://github.com/your-username/pokedex-cli.git
+   ```
+3. __Create a feature branch:__
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+4. __Make your changes and test:__
+   ```bash
+   go test ./...
+   ```
+5. __Commit and push:__
+   ```bash
+   git commit -m "Add amazing feature"
+   git push origin feature/amazing-feature
+   ```
+6. __Open a Pull Request__
+
+### Project Structure
+
+```javascript
+pokedex-cli/
+├── main.go                     # Application entry point
+├── cliHandler/                 # CLI command handling and logic
+├── pokecache/                  # Caching system implementation
+├── pokedexApiHandler/          # PokéAPI integration
+└── README.md                   # This file
+```
+
+### Areas for Contribution
+
+- __New Commands__: Add additional Pokédex functionality
+- __UI Improvements__: Enhance the command-line interface
+- __Performance__: Optimize caching strategies
+- __Testing__: Expand test coverage
+- __Documentation__: Improve code documentation
+
+---
+
+*Built with ❤️ and Go. Powered by [PokéAPI](https://pokeapi.co/)*
