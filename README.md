@@ -1,94 +1,106 @@
-# Your favourite Pokedex CLI
-A Pokedex is just a make-believe device that lets us look up information about Pokemon - things like their name, type, and stats
+# PokéDex CLI Explorer
 
-## How to use
-Here's the list of commands and what they do:
+A powerful command-line Pokédex application that brings the world of Pokémon to your terminal. Explore locations, catch Pokémon, and build your personal collection with this interactive CLI tool powered by the PokéAPI.
 
-`help` - displays a help message with all of the commands
-```
+## Description
+
+PokéDex CLI Explorer is an immersive terminal-based application that simulates the classic Pokédex experience. Navigate through different Pokémon locations, discover wild Pokémon in their natural habitats, attempt to catch them, and manage your growing collection—all from the comfort of your command line.
+
+Built with Go, this application features intelligent caching for optimal performance, a clean REPL (Read-Eval-Print Loop) interface, and comprehensive Pokémon data integration through the PokéAPI.
+
+## Why?
+
+**The Problem:** Traditional Pokédex applications are often GUI-heavy and lack the simplicity and efficiency that developers and CLI enthusiasts appreciate. There's a gap in the market for a lightweight, terminal-based Pokémon exploration tool.
+
+**The Solution:** PokéDex CLI Explorer bridges this gap by providing:
+- **Developer-Friendly Interface**: Clean command-line experience that feels natural for terminal users
+- **Performance Optimization**: Built-in caching system reduces API calls and improves response times
+- **Educational Value**: Demonstrates Go programming best practices, API integration, and CLI application design
+- **Nostalgia Factor**: Recreates the classic Pokédex experience in a modern, efficient format
+
+**Goals:**
+- Provide an engaging way to explore Pokémon data through the terminal
+- Showcase clean Go architecture and modular design patterns
+- Demonstrate real-world API integration with caching strategies
+- Create an educational tool for learning CLI application development
+
+## Quick Start
+
+### Prerequisites
+- Go 1.24.5 or higher
+- Internet connection (for PokéAPI access)
+
+### Installation & Running
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/dmitriy-zverev/pokedex-cli.git
+   cd pokedex-cli
+   ```
+
+2. **Build and run:**
+   ```bash
+   go build -o pokedex-cli
+   ./pokedex-cli
+   ```
+
+3. **Start exploring:**
+   ```
+   Pokedex > help
+   ```
+
+You'll be greeted with the interactive Pokédex prompt where you can start your adventure!
+
+## Usage
+
+### Core Commands
+
+#### Getting Help
+```bash
 Pokedex > help
 ```
-```
-Welcome to the Pokedex!
-Usage:
+Displays all available commands and their descriptions.
 
-help: Displays a help message
-map: Displays 20 next locations
-mapb: Displays 20 previous locations
-explore: Expores the location area and returns pokemons at this area
-catch: Catches a pokemon—or not
-inspect: Inspects a pokemon from your pokedex
-pokedex: Lists all of the caught pokemons
-exit: Exit the Pokedex
-```
-
-`exit` - exits the tool
-```
-Pokedex > exit
-```
-```
-Closing the Pokedex... Goodbye!
-```
-
-`map` - lists the next location area with autopagination on repeat command
-```
+#### Location Exploration
+```bash
+# View next 20 locations
 Pokedex > map
-```
-```
-canalave-city-area
-eterna-city-area
-pastoria-city-area
-sunyshore-city-area
-sinnoh-pokemon-league-area
-oreburgh-mine-1f
-oreburgh-mine-b1f
-valley-windworks-area
-eterna-forest-area
-fuego-ironworks-area
-mt-coronet-1f-route-207
-mt-coronet-2f
-mt-coronet-3f
-mt-coronet-exterior-snowfall
-mt-coronet-exterior-blizzard
-mt-coronet-4f
-mt-coronet-4f-small-room
-mt-coronet-5f
-mt-coronet-6f
-mt-coronet-1f-from-exterior
-```
 
-`mapb` - lists the previous location area like `map`
-```
+# View previous 20 locations  
 Pokedex > mapb
-```
-```
-canalave-city-area
-eterna-city-area
-pastoria-city-area
-sunyshore-city-area
-sinnoh-pokemon-league-area
-oreburgh-mine-1f
-oreburgh-mine-b1f
-valley-windworks-area
-eterna-forest-area
-fuego-ironworks-area
-mt-coronet-1f-route-207
-mt-coronet-2f
-mt-coronet-3f
-mt-coronet-exterior-snowfall
-mt-coronet-exterior-blizzard
-mt-coronet-4f
-mt-coronet-4f-small-room
-mt-coronet-5f
-mt-coronet-6f
-mt-coronet-1f-from-exterior
-```
 
-`explore` - explores the given location area and lists all of the pokemons there
-```
+# Explore a specific location
 Pokedex > explore canalave-city-area
 ```
+
+#### Pokémon Management
+```bash
+# Attempt to catch a Pokémon
+Pokedex > catch pikachu
+
+# Inspect a caught Pokémon's stats
+Pokedex > inspect pikachu
+
+# View your entire collection
+Pokedex > pokedex
 ```
+
+#### System Commands
+```bash
+# Exit the application
+Pokedex > exit
+```
+
+### Example Session
+
+```bash
+Pokedex > map
+canalave-city-area
+eterna-city-area
+pastoria-city-area
+# ... more locations
+
+Pokedex > explore canalave-city-area
 Exploring canalave-city-area...
 Found Pokemon:
  - tentacool
@@ -96,29 +108,13 @@ Found Pokemon:
  - staryu
  - magikarp
  - gyarados
- - wingull
- - pelipper
- - shellos
- - gastrodon
- - finneon
- - lumineon
-```
 
-`catch` - catches given pokemon based on randomness
-```
 Pokedex > catch pikachu
-```
-```
 Throwing a Pokeball at pikachu...
 pikachu was caught!
-You may now inspect it with the inspect pikachu!
-```
+You may now inspect it with the inspect command!
 
-`inspect` - lists the information about your caught pokemon
-```
 Pokedex > inspect pikachu
-```
-```
 Name: pikachu
 Height: 4
 Weight: 60
@@ -131,13 +127,11 @@ Stats:
         speed: 90
 Types:
          electric
-```
 
-`pokedex` - lists all of the caught pokemons
-```
 Pokedex > pokedex
-```
-```
 Your Pokedex:
         - pikachu
 ```
+
+## Certificate for completion
+<img width="915" height="558" alt="bootdev_certificate" src="https://github.com/user-attachments/assets/4d7bd23d-5c06-46fd-9a65-c2a8600c549a" />
