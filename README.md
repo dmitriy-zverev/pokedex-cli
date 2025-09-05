@@ -36,7 +36,7 @@ Built with Go, this application features intelligent caching for optimal perform
    ```bash
    git clone https://github.com/dmitriy-zverev/pokedex-cli.git
    cd pokedex-cli
-   
+   ```
 
 2. __Build and run:__
 
