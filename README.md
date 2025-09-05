@@ -1,4 +1,3 @@
-````markdown
 # PokéDex CLI Explorer
 
 A powerful command-line Pokédex application that brings the world of Pokémon to your terminal. Explore locations, catch Pokémon, and build your personal collection with this interactive CLI tool powered by the PokéAPI.
@@ -37,7 +36,7 @@ Built with Go, this application features intelligent caching for optimal perform
    ```bash
    git clone https://github.com/dmitriy-zverev/pokedex-cli.git
    cd pokedex-cli
-````
+   
 
 2. __Build and run:__
 
